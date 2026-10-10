@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+echo "hello world"
+for i in {0..10}; do
+	echo $((2**i))	
+done	

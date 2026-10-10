@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Print numbers odd from 1-99
+
+for i in {1..99}; do
+	if ((i % 2 != 0)); then
+		echo "$i"
+	fi	
+done	
+
