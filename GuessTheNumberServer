@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+min=0
+max=100
+CorrNumb=$(($RANDOM%($max-$min+1)+$min))
+echo "I thought of a number between 0 and 100, try to guess it."
+UsNumb=10001
+count=0
+until [[ CorrNumb == UsNumb ]]; do
+	read UsNumb
+	count=$((count + 1))
+	if ! [[ "$UsNumb" =~ ^[0-9]+$ ]]; then
+		echo "${UsNumb} is not a number"
+	elif ((UsNumb == CorrNumb)); then
+        	echo "Correct Number"
+		echo "Number of tries: $count"
+		break
+	elif ((UsNumb < CorrNumb)); then
+		echo "Too small"
+	elif ((UsNumb > CorrNumb)); then
+        	echo "Too big"
+	fi
+done
