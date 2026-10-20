@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+min=1
+max=6
+
+echo "There are 6 horses racing, what horse do you want to bet on winning the race"
+read UsersBettedHorse
+
+while [[ $UsersBettedHorse -lt 1 || $UsersBettedHorse -gt 6 ]]; do
+	echo "$UsersBettedHorse is not a valid horse to place a bet on, please reinput the horses number"
+	read UsersBettedHorse
+done	
+
+Horse1=0
+Horse2=0
+Horse3=0
+Horse4=0
+Horse5=0
+Horse6=0
+until [[ $Horse1 == 20 || $Horse2 == 20 || $Horse3 == 20 || $Horse4 == 20 || $Horse5 == 20 || $Horse6 == 20 ]]; do
+	HorseMoving=$(($RANDOM%($max-$min+1)+$min))
+	if (($HorseMoving == 1)); then
+		Horse1=$((Horse1 + 1))
+	elif (($HorseMoving == 2)); then
+		Horse2=$((Horse2 + 1))
+	elif (($HorseMoving == 3)); then
+		Horse3=$((Horse3 +1))
+	elif (($HorseMoving == 4)); then
+		Horse4=$((Horse4 +1))
+	elif (($HorseMoving == 5)); then
+		Horse5=$((Horse5 +1))
+	elif (($HorseMoving == 6)); then
+		Horse6=$((Horse6 +1))
+	fi
+done
+
+if (($UsersBettedHorse == 20)); then
+	echo "Horse $UsersBettedHorse won the race"
+else
+	echo "Horse $UsersBettedHorse didn't win the race"
+fi
+
+declare -A RaceResultArray
+RaceResultArray[One]=$Horse1
+RaceResultArray[Two]=$Horse2
+RaceResultArray[Three]=$Horse3
+RaceResultArray[Four]=$Horse4
+RaceResultArray[Five]=$Horse5
+RaceResultArray[Six]=$Horse6
+
+echo "Scoreboard of the race:"
+for key in "${!RaceResultArray[@]}"; do
+    echo "${RaceResultArray[$key]} steps: Horse $key"
+done | sort -rn
