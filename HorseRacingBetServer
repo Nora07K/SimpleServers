@@ -5,11 +5,12 @@ DistanceToWin=20
 
 echo "There are $NumbOfHorse horses racing, what horse do you want to bet on winning the race"
 
-read UsersBettedHorse
-
+UsersBettedHorse=0
 while [[ $UsersBettedHorse -lt 1 || $UsersBettedHorse -gt $NumbOfHorse ]]; do
-	echo "$UsersBettedHorse is not a valid horse to place a bet on, please reinput the horses number"
-	read UsersBettedHorse
+	read -r UsersBettedHorse
+	if [[ $UsersBettedHorse -lt 1 || $UsersBettedHorse -gt $NumbOfHorse ]]; then
+		echo "$UsersBettedHorse is not a valid horse to place a bet on, please reinput the horses number"
+	fi
 done	
 
 #echo "$UsersBettedHorse is your hourse number you betted on"
@@ -18,7 +19,7 @@ done
 declare -a HorseArray
 
 for ((i=1; i<=NumbOfHorse; i++)); do
-	HorseArray[$i]=0
+	HorseArray[i]=0
 done
 
 WinningHorse=0
@@ -28,14 +29,14 @@ while ((WinningHorse == 0)); do
 
 	((HorseArray[HorseThatMoves]++))
 	
-	if ((HorseArray[HorseThatMoves] == DistanceToWin)); then
+	if (( HorseArray[HorseThatMoves] >= DistanceToWin )); then
 		WinningHorse=$HorseThatMoves
 	fi
 done	
 
 echo "Winning Horse is number $WinningHorse"
 
-if (( $UsersBettedHorse == $WinningHorse )); then
+if (( UsersBettedHorse == WinningHorse )); then
     echo "You won your bet!"
 else
     echo "You lost your bet!"
